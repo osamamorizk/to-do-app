@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:todo/consts.dart';
+import 'package:todo/widgets/todo_item_widget.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -18,21 +19,5 @@ class HomeView extends StatelessWidget {
             ],
           ),
         ));
-  }
-}
-
-class TodoItem extends StatelessWidget {
-  const TodoItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 115,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-      ),
-    );
   }
 }
