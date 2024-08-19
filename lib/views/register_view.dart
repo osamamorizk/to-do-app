@@ -2,9 +2,8 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:todo/auth_cubit/auth_cubit.dart';
+import 'package:todo/cubits/auth_cubit/auth_cubit.dart';
 import 'package:todo/consts.dart';
-import 'package:todo/views/home_view.dart';
 import 'package:todo/views/login_view.dart';
 import 'package:todo/widgets/custom_button.dart';
 import 'package:todo/widgets/custom_text_field.dart';
@@ -161,7 +160,7 @@ class _RegisterViewState extends State<RegisterView> {
                               backgroundColor: Colors.green,
                               textColor: Colors.white,
                               fontSize: 16.0);
-                          Navigator.pushNamed(context, LoginView.id);
+                          Navigator.pop(context, LoginView.id);
                         }
                       },
                       builder: (context, state) {

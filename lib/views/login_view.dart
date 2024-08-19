@@ -2,7 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:todo/auth_cubit/auth_cubit.dart';
+import 'package:todo/cubits/auth_cubit/auth_cubit.dart';
 import 'package:todo/consts.dart';
 import 'package:todo/views/home_view.dart';
 import 'package:todo/views/register_view.dart';
@@ -116,7 +116,10 @@ class _LoginViewState extends State<LoginView> {
                 BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state is AuthLoginSuccess) {
-                      Navigator.pushNamed(context, HomeView.id);
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => HomeView()),
+                        (Route<dynamic> route) => false,
+                      );
                     }
                     if (state is AuthFailure) {
                       Fluttertoast.showToast(

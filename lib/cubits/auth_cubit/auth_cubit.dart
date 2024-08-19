@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
@@ -30,12 +28,11 @@ class AuthCubit extends Cubit<AuthState> {
   userRegister({required String email, required String password}) async {
     emit(AuthLoading());
     try {
-      final credintials =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      // log(credintials.toString());
+
       emit(AuthRegisterSuccess(successMessage: 'Register Successfluy'));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
