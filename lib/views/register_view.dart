@@ -1,8 +1,11 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo/auth_cubit/auth_cubit.dart';
 import 'package:todo/consts.dart';
+import 'package:todo/views/home_view.dart';
+import 'package:todo/views/login_view.dart';
 import 'package:todo/widgets/custom_button.dart';
 import 'package:todo/widgets/custom_text_field.dart';
 import 'package:todo/widgets/qusetion_inauth.dart';
@@ -137,21 +140,48 @@ class _RegisterViewState extends State<RegisterView> {
                     const SizedBox(
                       height: 32,
                     ),
-                    ConditionalBuilder(
-                      condition: true,
-                      builder: (context) => CustomButton(
-                        onTap: () async {
-                          if (formKey.currentState!.validate()) {
-                            await BlocProvider.of<AuthCubit>(context)
-                                .userRegister(
-                                    email: emailController.text,
-                                    password: passController.text);
-                          }
-                        },
-                        text: 'Register',
-                      ),
-                      fallback: (context) =>
-                          const Center(child: CircularProgressIndicator()),
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is AuthFailure) {
+                          Fluttertoast.showToast(
+                              msg: state.errorMessage,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }
+                        if (state is AuthRegisterSuccess) {
+                          Fluttertoast.showToast(
+                              msg: state.successMessage,
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.green,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                          Navigator.pushNamed(context, LoginView.id);
+                        }
+                      },
+                      builder: (context, state) {
+                        return ConditionalBuilder(
+                          condition: state is! AuthLoading,
+                          builder: (context) => CustomButton(
+                            onTap: () async {
+                              if (formKey.currentState!.validate()) {
+                                await BlocProvider.of<AuthCubit>(context)
+                                    .userRegister(
+                                        email: emailController.text,
+                                        password: passController.text);
+                              }
+                            },
+                            text: 'Register',
+                          ),
+                          fallback: (context) =>
+                              const Center(child: CircularProgressIndicator()),
+                        );
+                      },
                     ),
                     const SizedBox(
                       height: 16,

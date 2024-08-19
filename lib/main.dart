@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/bloc_observer.dart';
 import 'package:todo/firebase_options.dart';
+import 'package:todo/views/home_view.dart';
 import 'package:todo/views/login_view.dart';
 import 'package:todo/views/register_view.dart';
 
@@ -10,6 +13,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const ToDoApp());
+  Bloc.observer = MyBlocObserver();
 }
 
 class ToDoApp extends StatelessWidget {
@@ -22,6 +26,7 @@ class ToDoApp extends StatelessWidget {
       routes: {
         RegisterView.id: (context) => const RegisterView(),
         LoginView.id: (context) => const LoginView(),
+        HomeView.id: (context) => const HomeView(),
       },
       home: LoginView(),
     );
