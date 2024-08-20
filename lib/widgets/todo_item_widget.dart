@@ -1,9 +1,13 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:todo/models/task_model.dart';
 import 'package:todo/widgets/edit_widget.dart';
 import 'package:todo/widgets/time_widget.dart';
 
 class TodoItem extends StatefulWidget {
-  const TodoItem({super.key});
+  const TodoItem({super.key, required this.taskModel});
+  final TaskModel taskModel;
 
   @override
   State<TodoItem> createState() => _TodoItemState();
@@ -27,36 +31,40 @@ class _TodoItemState extends State<TodoItem> {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  // mainAxisAlignment: MainAxisAlignment.s,
                   children: [
                     Checkbox(
-                      value: isChecked,
+                      value: widget.taskModel.isCompleted,
                       onChanged: (value) {
                         isChecked = value!;
                         setState(() {});
                       },
                     ),
-                    const SizedBox(width: 50),
-                    const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("todo name"),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text('todo description'),
-                      ],
+                    const SizedBox(width: 70),
+                    SizedBox(
+                      width: 80,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.taskModel.title),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          Text(widget.taskModel.description),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-                const Row(
+                Row(
                   children: [
-                    TimeWidget(),
-                    SizedBox(
+                    TimeWidget(
+                      date: formatDate(
+                          widget.taskModel.dateTime.toDate(), [HH, ':', nn]),
+                      //dd, '/', mm, '_',
+                    ),
+                    const SizedBox(
                       width: 10,
                     ),
                     EditWidget()

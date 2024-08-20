@@ -7,14 +7,17 @@ class AddtaskCustomTextField extends StatelessWidget {
       required this.hint,
       this.maxLines = 1,
       this.onSaved,
-      this.onChanged});
+      this.onChanged,
+      this.controller});
   final String hint;
   final int maxLines;
   final void Function(String?)? onSaved;
   final void Function(String?)? onChanged;
+  final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       validator: (value) {
         if (value?.isEmpty ?? true) {
           return 'Required Field';

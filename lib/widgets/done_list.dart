@@ -38,7 +38,7 @@ class DoneList extends StatelessWidget {
                   itemCount: 10,
                   itemBuilder: (context, index) => const Padding(
                         padding: EdgeInsets.only(bottom: 10),
-                        child: TodoItem(),
+                        // child: TodoItem(taskModel: ,),
                       )),
             ),
           ],
