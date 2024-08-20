@@ -9,9 +9,7 @@ import 'package:todo/widgets/add_task_custom_button.dart';
 import 'package:todo/widgets/addtask_custom_text_field.dart';
 
 class AddTaskForm extends StatefulWidget {
-  const AddTaskForm({
-    super.key,
-  });
+  const AddTaskForm({super.key});
 
   @override
   State<AddTaskForm> createState() => _AddTaskFormState();
@@ -19,7 +17,9 @@ class AddTaskForm extends StatefulWidget {
 
 class _AddTaskFormState extends State<AddTaskForm> {
   TextEditingController titleController = TextEditingController();
+
   TextEditingController descController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TasksCubit, TasksState>(
@@ -65,6 +65,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   builder: (context) => AddTaskCustomButton(
                     onTap: () async {
                       await BlocProvider.of<TasksCubit>(context).addTask(
+                          isCompleted: false,
                           taskTitle: titleController.text,
                           taskDescription: descController.text);
                     },

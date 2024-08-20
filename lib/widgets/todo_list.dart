@@ -6,66 +6,95 @@ import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/widgets/todo_item_widget.dart';
 
-class TodoList extends StatelessWidget {
+class TodoList extends StatefulWidget {
   const TodoList({
     super.key,
   });
 
   @override
+  State<TodoList> createState() => _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  bool isChecked = false;
+  @override
   Widget build(BuildContext context) {
     final taskCubit = BlocProvider.of<TasksCubit>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Row(
+      child: BlocConsumer<TasksCubit, TasksState>(
+        listener: (context, state) {
+          if (state is! TasksDoneLoading) {
+            isChecked = false;
+          } else {
+            isChecked = true;
+          }
+          if (state is TasksDoneSuccess) {}
+        },
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8, top: 5),
-                  child: Expanded(
-                    child: Text(
-                      'To Do',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: kColor,
-                          fontWeight: FontWeight.bold),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 8, top: 5),
+                      child: Expanded(
+                        child: Text(
+                          'To Do',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: kColor,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
+                ),
+                StreamBuilder<QuerySnapshot>(
+                  stream: taskCubit.getTask(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    final List<TaskModel> tasks = [];
+                    for (var task in snapshot.data!.docs) {
+                      tasks.add(TaskModel.fromJson(task));
+                    }
+                    return SizedBox(
+                      height: 600,
+                      child: ListView.builder(
+                          padding: const EdgeInsets.only(top: 0),
+                          clipBehavior: Clip.antiAlias,
+                          itemCount: tasks.length,
+                          itemBuilder: (context, index) => Padding(
+                                padding: EdgeInsets.only(bottom: 10),
+                                child: TodoItem(
+                                  isChecked: isChecked,
+                                  onChanged: (value) {
+                                    value = true;
+                                    setState(() {});
+                                    taskCubit.completeTask(
+                                        isCompleted: true,
+                                        taskTitle: tasks[index].title,
+                                        taskDescription:
+                                            tasks[index].description);
+                                  },
+                                  taskModel: tasks[index],
+                                ),
+                              )),
+                    );
+                  },
                 ),
               ],
             ),
-            StreamBuilder<QuerySnapshot>(
-              stream: taskCubit.getTask(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                final List<TaskModel> tasks = [];
-                for (var task in snapshot.data!.docs) {
-                  tasks.add(TaskModel.fromJson(task));
-                }
-                return SizedBox(
-                  height: 600,
-                  child: ListView.builder(
-                      padding: const EdgeInsets.only(top: 0),
-                      clipBehavior: Clip.antiAlias,
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: TodoItem(
-                              taskModel: tasks[index],
-                            ),
-                          )),
-                );
-              },
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -19,4 +19,8 @@ final class TasksDoneLoading extends TasksState {}
 
 final class TasksDoneSuccess extends TasksState {}
 
-final class TasksDoneFailure extends TasksState {}
+final class TasksDoneFailure extends TasksState {
+  final String errorMessage;
+
+  TasksDoneFailure({required this.errorMessage});
+}

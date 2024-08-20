@@ -10,7 +10,9 @@ class TasksCubit extends Cubit<TasksState> {
   User? user = FirebaseAuth.instance.currentUser;
 
   Future<void> addTask(
-      {required String taskTitle, required String taskDescription}) async {
+      {required String taskTitle,
+      required String taskDescription,
+      required bool isCompleted}) async {
     if (user != null) {
       String uid = user!.uid;
       CollectionReference tasks = FirebaseFirestore.instance
@@ -24,7 +26,7 @@ class TasksCubit extends Cubit<TasksState> {
           'title': taskTitle,
           'description': taskDescription,
           'time': DateTime.now(),
-          'isCompleted': false,
+          'isCompleted': isCompleted,
         });
         emit(TasksAddSuccess());
       } catch (e) {
@@ -47,6 +49,52 @@ class TasksCubit extends Cubit<TasksState> {
           .snapshots();
     } else {
       throw Exception('No user is signed in');
+    }
+  }
+
+  Future<void> completeTask(
+      {required String taskTitle,
+      required String taskDescription,
+      required bool isCompleted}) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String uid = user.uid;
+      CollectionReference completeTask = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('completeTasks');
+
+      try {
+        emit(TasksDoneLoading());
+        await completeTask.add({
+          'title': taskTitle,
+          'description': taskDescription,
+          'isCompleted': isCompleted,
+          'time': DateTime.now(),
+        });
+        emit(TasksDoneSuccess());
+      } catch (e) {
+        emit(
+          TasksDoneFailure(errorMessage: e.toString()),
+        );
+      }
+    } else {
+      print('no user');
+    }
+  }
+
+  getCompleteTask() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String uid = user.uid;
+      return FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('completeTasks')
+          .orderBy('time', descending: true)
+          .snapshots();
+    } else {
+      throw Exception('No User login');
     }
   }
 }
