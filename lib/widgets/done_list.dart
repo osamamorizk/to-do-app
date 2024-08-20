@@ -14,6 +14,7 @@ class DoneList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final taskCubit = BlocProvider.of<TasksCubit>(context);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: SingleChildScrollView(

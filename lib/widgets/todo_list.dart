@@ -7,6 +7,8 @@ import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/widgets/todo_item_widget.dart';
 
+int? tasksNum;
+
 class TodoList extends StatefulWidget {
   const TodoList({
     super.key,
@@ -19,6 +21,7 @@ class TodoList extends StatefulWidget {
 class _TodoListState extends State<TodoList> {
   late String taskId;
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     final taskCubit = BlocProvider.of<TasksCubit>(context);
@@ -77,6 +80,7 @@ class _TodoListState extends State<TodoList> {
                     final List<TaskModel> tasks = [];
                     for (var task in snapshot.data!.docs) {
                       tasks.add(TaskModel.fromJson(task));
+                      tasksNum = tasks.length;
                     }
 
                     return SizedBox(
