@@ -7,6 +7,7 @@ import 'package:todo/firebase_options.dart';
 import 'package:todo/views/home_view.dart';
 import 'package:todo/views/login_view.dart';
 import 'package:todo/views/register_view.dart';
+import 'package:todo/widgets/custom_bottom_nav_barr.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,16 +30,22 @@ class ToDoApp extends StatelessWidget {
         LoginView.id: (context) => const LoginView(),
         HomeView.id: (context) => const HomeView(),
       },
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return HomeView();
-          } else {
-            return LoginView();
-          }
-        },
-      ),
+      home: AuthChecker(),
     );
+  }
+}
+
+class AuthChecker extends StatelessWidget {
+  const AuthChecker({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      return LoginView();
+    } else {
+      return CustomBottomNavigationBar();
+    }
   }
 }

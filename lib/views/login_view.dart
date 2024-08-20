@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo/cubits/auth_cubit/auth_cubit.dart';
 import 'package:todo/consts.dart';
-import 'package:todo/views/home_view.dart';
 import 'package:todo/views/register_view.dart';
+import 'package:todo/widgets/custom_bottom_nav_barr.dart';
 import 'package:todo/widgets/custom_button.dart';
 import 'package:todo/widgets/custom_text_field.dart';
 import 'package:todo/widgets/qusetion_inauth.dart';
@@ -117,7 +117,8 @@ class _LoginViewState extends State<LoginView> {
                   listener: (context, state) {
                     if (state is AuthLoginSuccess) {
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => HomeView()),
+                        MaterialPageRoute(
+                            builder: (context) => CustomBottomNavigationBar()),
                         (Route<dynamic> route) => false,
                       );
                     }

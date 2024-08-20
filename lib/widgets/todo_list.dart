@@ -11,29 +11,40 @@ class TodoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(bottom: 5),
-            child: Text(
-              'To Do',
-              style: TextStyle(
-                  fontSize: 20, color: kColor, fontWeight: FontWeight.bold),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 8, top: 5),
+                  child: Expanded(
+                    child: Text(
+                      'To Do',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: kColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 290,
-            child: ListView.builder(
-                padding: const EdgeInsets.only(top: 8),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                itemCount: 5,
-                itemBuilder: (context, index) => const Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: TodoItem(),
-                    )),
-          ),
-        ],
+            SizedBox(
+              height: 610,
+              child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 0),
+                  clipBehavior: Clip.antiAlias,
+                  itemCount: 10,
+                  itemBuilder: (context, index) => const Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: TodoItem(),
+                      )),
+            ),
+          ],
+        ),
       ),
     );
   }
