@@ -24,3 +24,13 @@ final class TasksDoneFailure extends TasksState {
 
   TasksDoneFailure({required this.errorMessage});
 }
+
+final class TasksDeleteLoading extends TasksState {}
+
+final class TasksDeleteSuccess extends TasksState {}
+
+final class TasksDeleteFailure extends TasksState {
+  final String errorMessage;
+
+  TasksDeleteFailure({required this.errorMessage});
+}

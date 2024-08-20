@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,10 +11,12 @@ class TasksCubit extends Cubit<TasksState> {
   TasksCubit() : super(TasksInitial());
   User? user = FirebaseAuth.instance.currentUser;
 
-  Future<void> addTask(
-      {required String taskTitle,
-      required String taskDescription,
-      required bool isCompleted}) async {
+  Future<void> addTask({
+    required String taskTitle,
+    required String taskDescription,
+    required bool isCompleted,
+    // required String id,
+  }) async {
     if (user != null) {
       String uid = user!.uid;
       CollectionReference tasks = FirebaseFirestore.instance
@@ -27,6 +31,7 @@ class TasksCubit extends Cubit<TasksState> {
           'description': taskDescription,
           'time': DateTime.now(),
           'isCompleted': isCompleted,
+          // 'id': id,
         });
         emit(TasksAddSuccess());
       } catch (e) {
@@ -52,10 +57,12 @@ class TasksCubit extends Cubit<TasksState> {
     }
   }
 
-  Future<void> completeTask(
-      {required String taskTitle,
-      required String taskDescription,
-      required bool isCompleted}) async {
+  Future<void> completeTask({
+    required String taskTitle,
+    required String taskDescription,
+    required bool isCompleted,
+    // required String id,
+  }) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       String uid = user.uid;
@@ -71,6 +78,7 @@ class TasksCubit extends Cubit<TasksState> {
           'description': taskDescription,
           'isCompleted': isCompleted,
           'time': DateTime.now(),
+          // 'id': id,
         });
         emit(TasksDoneSuccess());
       } catch (e) {
@@ -95,6 +103,23 @@ class TasksCubit extends Cubit<TasksState> {
           .snapshots();
     } else {
       throw Exception('No User login');
+    }
+  }
+
+  delete(String taskId) {
+    // emit(TasksDeleteLoading());
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = user!.uid;
+    try {
+      DocumentReference task = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('tasks')
+          .doc(taskId);
+
+      return task.delete().then((value) => emit(TasksDeleteSuccess()));
+    } catch (e) {
+      emit(TasksDeleteFailure(errorMessage: e.toString()));
     }
   }
 }
