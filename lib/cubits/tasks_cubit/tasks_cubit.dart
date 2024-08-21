@@ -127,4 +127,30 @@ class TasksCubit extends Cubit<TasksState> {
       emit(TasksDeleteFailure(errorMessage: e.toString()));
     }
   }
+
+  editTask(String taskId, String collection, Map<Object, Object?> data) {
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = user!.uid;
+
+    try {
+      DocumentReference task = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection(collection)
+          .doc(taskId);
+
+      task.update(data);
+      emit(TasksUpdatedSuccess());
+    } catch (e) {
+      emit(TasksDeleteFailure(errorMessage: e.toString()));
+    }
+  }
 }
+
+// var collection = FirebaseFirestore.instance.collection('collection');
+// collection 
+//     .doc('doc_id') 
+//     .update({'key' : 'value'}) // <-- Updated data
+//     .then((_) => print('Success'))
+//     .catchError((error) => print('Failed: $error'));
+

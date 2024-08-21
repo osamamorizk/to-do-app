@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
-  final String title;
-  final String description;
-  final Timestamp dateTime;
+  String title;
+  String description;
+  Timestamp dateTime;
   bool isCompleted;
   // final String id;
   final String image;

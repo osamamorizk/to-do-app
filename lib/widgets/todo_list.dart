@@ -5,9 +5,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo/consts.dart';
 import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/models/task_model.dart';
+import 'package:todo/views/edit_task_view.dart';
 import 'package:todo/widgets/todo_item_widget.dart';
 
-int? tasksNum;
+// int? tasksNum;
 
 class TodoList extends StatefulWidget {
   const TodoList({
@@ -19,7 +20,7 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  late String taskId;
+  String? taskId;
   late Map<String, bool> taskCheckedState = {};
 
   @override
@@ -31,7 +32,7 @@ class _TodoListState extends State<TodoList> {
       child: BlocConsumer<TasksCubit, TasksState>(
         listener: (context, state) {
           if (state is TasksDoneSuccess) {
-            taskCubit.delete(taskId, 'tasks');
+            taskCubit.delete(taskId!, 'tasks');
             Fluttertoast.showToast(
                 msg: "Great !",
                 toastLength: Toast.LENGTH_SHORT,
@@ -61,7 +62,7 @@ class _TodoListState extends State<TodoList> {
                     for (var task in snapshot.data!.docs) {
                       TaskModel taskModel = TaskModel.fromJson(task);
                       tasks.add(taskModel);
-                      tasksNum = tasks.length;
+                      // tasksNum = tasks.length;
                       if (!taskCheckedState.containsKey(taskModel.title)) {
                         taskCheckedState[taskModel.title] =
                             taskModel.isCompleted;
@@ -85,6 +86,19 @@ class _TodoListState extends State<TodoList> {
                               itemBuilder: (context, index) => Padding(
                                     padding: EdgeInsets.only(bottom: 10),
                                     child: TodoItem(
+                                      onTap: () {
+                                        // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>EditTaskView()))
+                                        Navigator.pushNamed(
+                                          context,
+                                          EditTaskView.id,
+                                          arguments: <String, dynamic>{
+                                            'taskId':
+                                                snapshot.data!.docs[index].id,
+                                            'collection': 'tasks',
+                                            'taskModel': tasks[index],
+                                          },
+                                        );
+                                      },
                                       value:
                                           taskCheckedState[tasks[index].title]!,
                                       onChanged: (value) async {

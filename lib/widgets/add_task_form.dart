@@ -71,10 +71,12 @@ class _AddTaskFormState extends State<AddTaskForm> {
               const SizedBox(
                 height: 20,
               ),
-
               SizedBox(
-                height: 100,
+                height: 150,
                 child: CupertinoDatePicker(
+                  minimumYear: 2024,
+                  maximumDate: DateTime(2026),
+                  backgroundColor: kColorBackground,
                   mode: CupertinoDatePickerMode.dateAndTime,
                   initialDateTime: DateTime.now(),
                   onDateTimeChanged: (DateTime newDateTime) {
@@ -84,28 +86,6 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   },
                 ),
               ),
-
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   children: [
-              //     IconButton(
-              //       onPressed: () {
-              //         selectDate(context);
-              //       },
-              //       icon: const Icon(Icons.calendar_month),
-              //     ),
-              //     const SizedBox(
-              //       width: 15,
-              //     ),
-              //     Text(
-              //       '${formatDate(
-              //         selectedDate,
-              //         [dd, '/', mm, '/', yy, ' - ', HH, ':', nn],
-              //       )}',
-              //       style: TextStyle(fontSize: 18),
-              //     ),
-              //   ],
-              // ),
               const SizedBox(
                 height: 20,
               ),

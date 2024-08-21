@@ -29,6 +29,8 @@ final class TasksDeleteLoading extends TasksState {}
 
 final class TasksDeleteSuccess extends TasksState {}
 
+final class TasksUpdatedSuccess extends TasksState {}
+
 final class TasksDeleteFailure extends TasksState {
   final String errorMessage;
 

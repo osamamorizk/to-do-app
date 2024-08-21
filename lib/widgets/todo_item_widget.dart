@@ -11,11 +11,13 @@ class TodoItem extends StatefulWidget {
       required this.taskModel,
       this.onChanged,
       required this.isChecked,
-      required this.value});
+      required this.value,
+      this.onTap});
   final TaskModel taskModel;
   final void Function(bool?)? onChanged;
   final bool isChecked;
   final bool value;
+  final void Function()? onTap;
 
   @override
   State<TodoItem> createState() => _TodoItemState();
@@ -39,13 +41,15 @@ class _TodoItemState extends State<TodoItem> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Row(
-                  children: [
-                    Checkbox(value: widget.value, onChanged: widget.onChanged),
-                    const SizedBox(width: 50),
-                    SizedBox(
-                      width: 80,
-                      child: Column(
+                SizedBox(
+                  width: 200,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Checkbox(
+                          value: widget.value, onChanged: widget.onChanged),
+                      const SizedBox(width: 20),
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(widget.taskModel.title),
@@ -55,8 +59,8 @@ class _TodoItemState extends State<TodoItem> {
                           Text(widget.taskModel.description),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -68,7 +72,9 @@ class _TodoItemState extends State<TodoItem> {
                     const SizedBox(
                       width: 10,
                     ),
-                    EditWidget()
+                    EditWidget(
+                      onTap: widget.onTap,
+                    )
                   ],
                 ),
               ],
