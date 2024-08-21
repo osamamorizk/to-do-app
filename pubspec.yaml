@@ -107,7 +107,7 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: 'assets/icon.jpg'
+  image_path: 'assets/s.png'
 
 flutter_native_splash:
   android: true 

@@ -10,6 +10,7 @@ import 'package:todo/views/home_view.dart';
 import 'package:todo/widgets/ImageList_widget.dart';
 import 'package:todo/widgets/add_task_custom_button.dart';
 import 'package:todo/widgets/addtask_custom_text_field.dart';
+import 'package:todo/widgets/custom_bottom_nav_barr.dart';
 
 class EditTaskWidget extends StatefulWidget {
   const EditTaskWidget(
@@ -60,7 +61,8 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
               fontSize: 16.0);
           Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => HomeView()),
+              MaterialPageRoute(
+                  builder: (context) => CustomBottomNavigationBar()),
               (Route<dynamic> route) => false);
         }
       },
