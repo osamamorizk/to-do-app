@@ -10,12 +10,13 @@ part 'tasks_state.dart';
 class TasksCubit extends Cubit<TasksState> {
   TasksCubit() : super(TasksInitial());
   User? user = FirebaseAuth.instance.currentUser;
-
+  String image = 'assets/images/0.png';
+  bool isChecked = false;
   Future<void> addTask({
     required String taskTitle,
     required String taskDescription,
     required bool isCompleted,
-    // required String id,
+    required String image,
   }) async {
     if (user != null) {
       String uid = user!.uid;
@@ -31,7 +32,7 @@ class TasksCubit extends Cubit<TasksState> {
           'description': taskDescription,
           'time': DateTime.now(),
           'isCompleted': isCompleted,
-          // 'id': id,
+          'image': image,
         });
         emit(TasksAddSuccess());
       } catch (e) {
@@ -61,7 +62,7 @@ class TasksCubit extends Cubit<TasksState> {
     required String taskTitle,
     required String taskDescription,
     required bool isCompleted,
-    // required String id,
+    required String image,
   }) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -78,7 +79,7 @@ class TasksCubit extends Cubit<TasksState> {
           'description': taskDescription,
           'isCompleted': isCompleted,
           'time': DateTime.now(),
-          // 'id': id,
+          'image': image,
         });
         emit(TasksDoneSuccess());
       } catch (e) {
@@ -87,7 +88,7 @@ class TasksCubit extends Cubit<TasksState> {
         );
       }
     } else {
-      print('no user');
+      log('no user');
     }
   }
 

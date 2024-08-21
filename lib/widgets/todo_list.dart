@@ -20,7 +20,6 @@ class TodoList extends StatefulWidget {
 
 class _TodoListState extends State<TodoList> {
   late String taskId;
-  bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,9 @@ class _TodoListState extends State<TodoList> {
       child: BlocConsumer<TasksCubit, TasksState>(
         listener: (context, state) {
           if (state is! TasksDoneLoading) {
-            isChecked = false;
+            taskCubit.isChecked = false;
           } else {
-            isChecked = true;
+            taskCubit.isChecked = true;
           }
           if (state is TasksDoneSuccess) {
             taskCubit.delete(taskId);
@@ -92,17 +91,18 @@ class _TodoListState extends State<TodoList> {
                           itemBuilder: (context, index) => Padding(
                                 padding: EdgeInsets.only(bottom: 10),
                                 child: TodoItem(
-                                  isChecked: isChecked,
                                   onChanged: (value) async {
-                                    value = true;
+                                    value = taskCubit.isChecked;
                                     setState(() {});
-                                    taskCubit.completeTask(
+                                    await taskCubit.completeTask(
+                                        image: tasks[index].image,
                                         isCompleted: true,
                                         taskTitle: tasks[index].title,
                                         taskDescription:
                                             tasks[index].description);
                                     taskId = snapshot.data!.docs[index].id;
                                   },
+                                  isChecked: taskCubit.isChecked,
                                   taskModel: tasks[index],
                                 ),
                               )),

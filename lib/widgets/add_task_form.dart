@@ -65,7 +65,7 @@ class _AddTaskFormState extends State<AddTaskForm> {
                   builder: (context) => AddTaskCustomButton(
                     onTap: () async {
                       await BlocProvider.of<TasksCubit>(context).addTask(
-                          // id: ,
+                          image: BlocProvider.of<TasksCubit>(context).image,
                           isCompleted: false,
                           taskTitle: titleController.text,
                           taskDescription: descController.text);

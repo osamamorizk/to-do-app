@@ -1,5 +1,7 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/models/task_model.dart';
 import 'package:todo/widgets/edit_widget.dart';
 import 'package:todo/widgets/time_widget.dart';
@@ -39,7 +41,8 @@ class _TodoItemState extends State<TodoItem> {
                 Row(
                   children: [
                     Checkbox(
-                        value: widget.isChecked, onChanged: widget.onChanged),
+                        value: BlocProvider.of<TasksCubit>(context).isChecked,
+                        onChanged: widget.onChanged),
                     const SizedBox(width: 70),
                     SizedBox(
                       width: 80,
@@ -71,10 +74,10 @@ class _TodoItemState extends State<TodoItem> {
                 ),
               ],
             ),
-            const Image(
+            Image(
                 height: 100,
                 width: 100,
-                image: AssetImage('assets/images/0.png')),
+                image: AssetImage(widget.taskModel.image)),
           ],
         ),
       ),

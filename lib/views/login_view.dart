@@ -31,7 +31,7 @@ class _LoginViewState extends State<LoginView> {
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: Scaffold(
-        backgroundColor: kColorBackground,
+        backgroundColor: Color(0xffF6F6F6),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Form(

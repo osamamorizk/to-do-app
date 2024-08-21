@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ImageItem extends StatelessWidget {
   const ImageItem({super.key, required this.image, required this.isSlected});
-  final ImageProvider<Object> image;
+  final String image;
   final bool isSlected;
 
   @override
@@ -22,7 +22,7 @@ class ImageItem extends StatelessWidget {
                 child: Center(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16),
-                    child: Image(image: image),
+                    child: Image(image: AssetImage(image)),
                   ),
                 ),
               ),
@@ -35,7 +35,9 @@ class ImageItem extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.only(right: 16),
-                child: Image(image: image),
+                child: Image(
+                  image: AssetImage(image),
+                ),
               ),
             ),
           );
