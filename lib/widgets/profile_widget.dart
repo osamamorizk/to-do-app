@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/consts.dart';
-import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/widgets/static_box.dart';
 
 class ProfileWidget extends StatefulWidget {

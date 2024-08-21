@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/views/login_view.dart';
 
 part 'tasks_state.dart';
 
@@ -12,8 +11,7 @@ class TasksCubit extends Cubit<TasksState> {
   TasksCubit() : super(TasksInitial());
   User? user = FirebaseAuth.instance.currentUser;
   String image = 'assets/images/0.png';
-  bool isChecked = true;
-  bool NotChecked = false;
+
   Future<void> addTask({
     required String taskTitle,
     required String taskDescription,

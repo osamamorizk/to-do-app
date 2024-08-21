@@ -30,11 +30,6 @@ class _TodoListState extends State<TodoList> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: BlocConsumer<TasksCubit, TasksState>(
         listener: (context, state) {
-          if (state is! TasksDoneLoading) {
-            taskCubit.isChecked = false;
-          } else {
-            taskCubit.NotChecked = true;
-          }
           if (state is TasksDoneSuccess) {
             taskCubit.delete(taskId, 'tasks');
             Fluttertoast.showToast(
@@ -57,7 +52,9 @@ class _TodoListState extends State<TodoList> {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const SizedBox(
+                          height: 600,
+                          child: Center(child: CircularProgressIndicator()));
                     }
 
                     final List<TaskModel> tasks = [];
@@ -73,32 +70,41 @@ class _TodoListState extends State<TodoList> {
 
                     return SizedBox(
                       height: 600,
-                      child: ListView.builder(
-                          padding: const EdgeInsets.only(top: 20),
-                          clipBehavior: Clip.antiAlias,
-                          itemCount: tasks.length,
-                          itemBuilder: (context, index) => Padding(
-                                padding: EdgeInsets.only(bottom: 10),
-                                child: TodoItem(
-                                  value: taskCheckedState[tasks[index].title]!,
-                                  onChanged: (value) async {
-                                    setState(() {
-                                      taskCheckedState[tasks[index].title] =
-                                          value!;
-                                    });
-                                    await taskCubit.completeTask(
-                                        image: tasks[index].image,
-                                        isCompleted: true,
-                                        taskTitle: tasks[index].title,
-                                        taskDescription:
-                                            tasks[index].description);
-                                    taskId = snapshot.data!.docs[index].id;
-                                  },
-                                  isChecked:
-                                      taskCheckedState[tasks[index].title]!,
-                                  taskModel: tasks[index],
-                                ),
-                              )),
+                      child: tasks.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "Plan Your Day, Own Your Day\n Let's Add Today's Tasks",
+                                style:
+                                    TextStyle(fontSize: 18, color: kColorHints),
+                              ),
+                            )
+                          : ListView.builder(
+                              padding: const EdgeInsets.only(top: 20),
+                              clipBehavior: Clip.antiAlias,
+                              itemCount: tasks.length,
+                              itemBuilder: (context, index) => Padding(
+                                    padding: EdgeInsets.only(bottom: 10),
+                                    child: TodoItem(
+                                      value:
+                                          taskCheckedState[tasks[index].title]!,
+                                      onChanged: (value) async {
+                                        setState(() {
+                                          taskCheckedState[tasks[index].title] =
+                                              value!;
+                                        });
+                                        await taskCubit.completeTask(
+                                            image: tasks[index].image,
+                                            isCompleted: true,
+                                            taskTitle: tasks[index].title,
+                                            taskDescription:
+                                                tasks[index].description);
+                                        taskId = snapshot.data!.docs[index].id;
+                                      },
+                                      isChecked:
+                                          taskCheckedState[tasks[index].title]!,
+                                      taskModel: tasks[index],
+                                    ),
+                                  )),
                     );
                   },
                 ),

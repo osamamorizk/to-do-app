@@ -49,7 +49,9 @@ class _DoneListState extends State<DoneList> {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
-                        return const Center(child: CircularProgressIndicator());
+                        return const SizedBox(
+                            height: 600,
+                            child: Center(child: CircularProgressIndicator()));
                       }
                       final List<TaskModel> completeTasks = [];
                       for (var task in snapshot.data!.docs) {
@@ -64,33 +66,45 @@ class _DoneListState extends State<DoneList> {
 
                       return SizedBox(
                         height: 630,
-                        child: ListView.builder(
-                            padding: const EdgeInsets.only(top: 20),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            itemCount: completeTasks.length,
-                            itemBuilder: (context, index) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: TodoItem(
-                                    value: isCompletedtask[
-                                        completeTasks[index].title]!,
-                                    onChanged: (value) async {
-                                      setState(() {
-                                        isCompletedtask[completeTasks[index]
-                                            .title] = value!;
-                                      });
-                                      await taskCubit.addTask(
-                                          image: completeTasks[index].image,
-                                          isCompleted: false,
-                                          taskTitle: completeTasks[index].title,
-                                          taskDescription:
-                                              completeTasks[index].description);
-                                      taskId = snapshot.data!.docs[index].id;
-                                    },
-                                    taskModel: completeTasks[index],
-                                    isChecked: isCompletedtask[
-                                        completeTasks[index].title]!,
-                                  ),
-                                )),
+                        child: completeTasks.isEmpty
+                            ? const Center(
+                                child: Text(
+                                  "Get Things Done !",
+                                  style: TextStyle(
+                                      fontSize: 18, color: kColorHints),
+                                ),
+                              )
+                            : ListView.builder(
+                                padding: const EdgeInsets.only(top: 20),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                itemCount: completeTasks.length,
+                                itemBuilder: (context, index) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
+                                      child: TodoItem(
+                                        value: isCompletedtask[
+                                            completeTasks[index].title]!,
+                                        onChanged: (value) async {
+                                          setState(() {
+                                            isCompletedtask[completeTasks[index]
+                                                .title] = value!;
+                                          });
+                                          await taskCubit.addTask(
+                                              image: completeTasks[index].image,
+                                              isCompleted: false,
+                                              taskTitle:
+                                                  completeTasks[index].title,
+                                              taskDescription:
+                                                  completeTasks[index]
+                                                      .description);
+                                          taskId =
+                                              snapshot.data!.docs[index].id;
+                                        },
+                                        taskModel: completeTasks[index],
+                                        isChecked: isCompletedtask[
+                                            completeTasks[index].title]!,
+                                      ),
+                                    )),
                       );
                     }),
               ],
