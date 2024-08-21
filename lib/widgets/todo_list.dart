@@ -42,6 +42,17 @@ class _TodoListState extends State<TodoList> {
                 textColor: Colors.white,
                 fontSize: 16.0);
           }
+          if (state is TasksDeleteSuccess) {
+            taskCubit.delete(taskId!, 'tasks');
+            Fluttertoast.showToast(
+                msg: "Task deleted",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
         },
         builder: (context, state) {
           return SingleChildScrollView(
@@ -83,40 +94,66 @@ class _TodoListState extends State<TodoList> {
                               padding: const EdgeInsets.only(top: 20),
                               clipBehavior: Clip.antiAlias,
                               itemCount: tasks.length,
-                              itemBuilder: (context, index) => Padding(
-                                    padding: EdgeInsets.only(bottom: 10),
-                                    child: TodoItem(
-                                      onTap: () {
-                                        // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>EditTaskView()))
-                                        Navigator.pushNamed(
-                                          context,
-                                          EditTaskView.id,
-                                          arguments: <String, dynamic>{
-                                            'taskId':
-                                                snapshot.data!.docs[index].id,
-                                            'collection': 'tasks',
-                                            'taskModel': tasks[index],
-                                          },
-                                        );
-                                      },
-                                      value:
-                                          taskCheckedState[tasks[index].title]!,
-                                      onChanged: (value) async {
-                                        setState(() {
-                                          taskCheckedState[tasks[index].title] =
-                                              value!;
-                                        });
-                                        await taskCubit.completeTask(
-                                            image: tasks[index].image,
-                                            isCompleted: true,
-                                            taskTitle: tasks[index].title,
-                                            taskDescription:
-                                                tasks[index].description);
-                                        taskId = snapshot.data!.docs[index].id;
-                                      },
-                                      isChecked:
-                                          taskCheckedState[tasks[index].title]!,
-                                      taskModel: tasks[index],
+                              itemBuilder: (context, index) => Dismissible(
+                                    onDismissed: (direction) {
+                                      setState(
+                                        () {
+                                          BlocProvider.of<TasksCubit>(context)
+                                              .delete(
+                                                  snapshot.data!.docs[index].id,
+                                                  'tasks');
+                                        },
+                                      );
+                                    },
+                                    key: UniqueKey(),
+                                    background: Container(
+                                      height: 50,
+                                      width: 30,
+                                      decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius:
+                                              BorderRadius.circular(16)),
+                                      child: const Icon(
+                                        color: Colors.white,
+                                        size: 40,
+                                        Icons.delete_outlined,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(bottom: 10),
+                                      child: TodoItem(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            EditTaskView.id,
+                                            arguments: <String, dynamic>{
+                                              'taskId':
+                                                  snapshot.data!.docs[index].id,
+                                              'collection': 'tasks',
+                                              'taskModel': tasks[index],
+                                            },
+                                          );
+                                        },
+                                        value: taskCheckedState[
+                                            tasks[index].title]!,
+                                        onChanged: (value) async {
+                                          setState(() {
+                                            taskCheckedState[
+                                                tasks[index].title] = value!;
+                                          });
+                                          await taskCubit.completeTask(
+                                              image: tasks[index].image,
+                                              isCompleted: true,
+                                              taskTitle: tasks[index].title,
+                                              taskDescription:
+                                                  tasks[index].description);
+                                          taskId =
+                                              snapshot.data!.docs[index].id;
+                                        },
+                                        isChecked: taskCheckedState[
+                                            tasks[index].title]!,
+                                        taskModel: tasks[index],
+                                      ),
                                     ),
                                   )),
                     );
