@@ -47,4 +47,18 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure(errorMessage: e.toString()));
     }
   }
+
+  logOut() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      try {
+        await FirebaseAuth.instance.signOut();
+
+        emit(AuthLogOutSuccess(successMessage: 'Log out successfluly'));
+      } catch (e) {
+        emit(AuthFailure(errorMessage: e.toString()));
+      }
+    }
+  }
 }

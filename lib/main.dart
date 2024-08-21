@@ -3,10 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/bloc_observer.dart';
+import 'package:todo/consts.dart';
 import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/views/home_view.dart';
 import 'package:todo/views/login_view.dart';
+import 'package:todo/views/profile_view.dart';
 import 'package:todo/views/register_view.dart';
 import 'package:todo/widgets/custom_bottom_nav_barr.dart';
 
@@ -27,11 +29,13 @@ class ToDoApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => TasksCubit(),
       child: MaterialApp(
+        theme: ThemeData(primaryColor: kColor),
         debugShowCheckedModeBanner: false,
         routes: {
           RegisterView.id: (context) => const RegisterView(),
           LoginView.id: (context) => const LoginView(),
           HomeView.id: (context) => const HomeView(),
+          ProfileView.id: (context) => const ProfileView(),
         },
         home: AuthChecker(),
       ),

@@ -9,10 +9,14 @@ class ArchivedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 240, 237, 237),
           scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
+          leading: const Icon(
+            Icons.archive_rounded,
+            color: kColor,
+          ),
           title: const Text(
-            "Your Accomplishments",
+            "Archived",
             style: TextStyle(
               color: kColorHints,
               fontWeight: FontWeight.bold,

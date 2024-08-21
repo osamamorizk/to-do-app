@@ -10,10 +10,14 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: const Icon(
+            Icons.task,
+            color: kColor,
+          ),
           scrolledUnderElevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: const Color.fromARGB(255, 240, 237, 237),
           title: const Text(
-            'Get Things Done',
+            'Tasks',
             style: TextStyle(
               color: kColorHints,
               fontWeight: FontWeight.bold,

@@ -21,7 +21,7 @@ class StatisticsContainer extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(color: kColorHints, fontSize: 25),
+            style: TextStyle(color: kColorHints, fontSize: 23),
           ),
           const SizedBox(
             height: 4,
@@ -30,10 +30,10 @@ class StatisticsContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+                padding: EdgeInsets.symmetric(horizontal: 22),
                 child: Text(
                   '$numTask',
-                  style: TextStyle(color: kColorHints, fontSize: 25),
+                  style: TextStyle(color: kColorHints, fontSize: 22),
                 ),
               ),
             ],

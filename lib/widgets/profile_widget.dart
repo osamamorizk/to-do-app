@@ -1,41 +1,52 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/consts.dart';
 import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/widgets/static_box.dart';
 
-class ProfileWidget extends StatelessWidget {
+class ProfileWidget extends StatefulWidget {
   final int todoNumber;
   final int doneNumber;
 
   const ProfileWidget(
       {super.key, required this.todoNumber, required this.doneNumber});
+
+  @override
+  State<ProfileWidget> createState() => _ProfileWidgetState();
+}
+
+class _ProfileWidgetState extends State<ProfileWidget> {
+  final user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    final taskCubit = BlocProvider.of<TasksCubit>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            height: 70,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Text(
-                    "Email:  osama@gmail.com",
-                    style: TextStyle(color: kColorHints, fontSize: 22),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Container(
+              height: 70,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      "Account:  ${user!.email}",
+                      style: TextStyle(color: kColorHints, fontSize: 20),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           const SizedBox(
@@ -46,7 +57,7 @@ class ProfileWidget extends StatelessWidget {
             children: [
               Text(
                 "Tasks Overview",
-                style: TextStyle(color: kColorHints, fontSize: 22),
+                style: TextStyle(color: kColorHints, fontSize: 20),
               ),
             ],
           ),
@@ -58,11 +69,11 @@ class ProfileWidget extends StatelessWidget {
             children: [
               StatisticsContainer(
                 title: 'Todo',
-                numTask: todoNumber,
+                numTask: widget.todoNumber,
               ),
               StatisticsContainer(
                 title: 'Done',
-                numTask: doneNumber,
+                numTask: widget.doneNumber,
               ),
             ],
           ),

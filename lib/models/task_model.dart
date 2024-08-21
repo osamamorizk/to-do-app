@@ -5,12 +5,11 @@ class TaskModel {
   final String description;
   final Timestamp dateTime;
   bool isCompleted;
-  // final String id;
+
   final String image;
 
   TaskModel({
     required this.image,
-    // required this.id,
     required this.isCompleted,
     required this.title,
     required this.description,
@@ -19,7 +18,6 @@ class TaskModel {
   factory TaskModel.fromJson(json) {
     return TaskModel(
       image: json['image'],
-      // id: json['id'],
       title: json['title'].toString(),
       description: json['description'],
       dateTime: json['time'],

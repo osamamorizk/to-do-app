@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/views/login_view.dart';
 
 part 'tasks_state.dart';
 
@@ -11,7 +12,8 @@ class TasksCubit extends Cubit<TasksState> {
   TasksCubit() : super(TasksInitial());
   User? user = FirebaseAuth.instance.currentUser;
   String image = 'assets/images/0.png';
-  bool isChecked = false;
+  bool isChecked = true;
+  bool NotChecked = false;
   Future<void> addTask({
     required String taskTitle,
     required String taskDescription,
@@ -54,7 +56,9 @@ class TasksCubit extends Cubit<TasksState> {
           .orderBy('time', descending: true)
           .snapshots();
     } else {
-      throw Exception('No user is signed in');
+      emit(NoUserSigned());
+      // Navigator.pushNamed(context, LoginView.id);
+      // throw Exception('No user is signed in');
     }
   }
 
@@ -103,19 +107,20 @@ class TasksCubit extends Cubit<TasksState> {
           .orderBy('time', descending: true)
           .snapshots();
     } else {
-      throw Exception('No User login');
+      emit(NoUserSigned());
     }
   }
 
-  delete(String taskId) {
+  delete(String taskId, String collection) {
     // emit(TasksDeleteLoading());
     User? user = FirebaseAuth.instance.currentUser;
     String uid = user!.uid;
+
     try {
       DocumentReference task = FirebaseFirestore.instance
           .collection('users')
           .doc(uid)
-          .collection('tasks')
+          .collection(collection)
           .doc(taskId);
 
       return task.delete().then((value) => emit(TasksDeleteSuccess()));

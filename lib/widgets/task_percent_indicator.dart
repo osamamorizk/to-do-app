@@ -85,6 +85,7 @@ class TaskPercentIndicator extends StatelessWidget {
       ),
       circularStrokeCap: CircularStrokeCap.round,
       progressColor: kColor,
+      backgroundColor: Colors.white,
     );
   }
 }

@@ -34,3 +34,5 @@ final class TasksDeleteFailure extends TasksState {
 
   TasksDeleteFailure({required this.errorMessage});
 }
+
+final class NoUserSigned extends TasksState {}

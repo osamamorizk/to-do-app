@@ -20,6 +20,7 @@ class TodoList extends StatefulWidget {
 
 class _TodoListState extends State<TodoList> {
   late String taskId;
+  late Map<String, bool> taskCheckedState = {};
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +33,10 @@ class _TodoListState extends State<TodoList> {
           if (state is! TasksDoneLoading) {
             taskCubit.isChecked = false;
           } else {
-            taskCubit.isChecked = true;
+            taskCubit.NotChecked = true;
           }
           if (state is TasksDoneSuccess) {
-            taskCubit.delete(taskId);
+            taskCubit.delete(taskId, 'tasks');
             Fluttertoast.showToast(
                 msg: "Great !",
                 toastLength: Toast.LENGTH_SHORT,
@@ -51,23 +52,6 @@ class _TodoListState extends State<TodoList> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 8, top: 5),
-                      child: Expanded(
-                        child: Text(
-                          'To Do',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: kColor,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
                 StreamBuilder<QuerySnapshot>(
                   stream: taskCubit.getTask(),
                   builder: (BuildContext context,
@@ -78,22 +62,30 @@ class _TodoListState extends State<TodoList> {
 
                     final List<TaskModel> tasks = [];
                     for (var task in snapshot.data!.docs) {
-                      tasks.add(TaskModel.fromJson(task));
+                      TaskModel taskModel = TaskModel.fromJson(task);
+                      tasks.add(taskModel);
                       tasksNum = tasks.length;
+                      if (!taskCheckedState.containsKey(taskModel.title)) {
+                        taskCheckedState[taskModel.title] =
+                            taskModel.isCompleted;
+                      }
                     }
 
                     return SizedBox(
                       height: 600,
                       child: ListView.builder(
-                          padding: const EdgeInsets.only(top: 0),
+                          padding: const EdgeInsets.only(top: 20),
                           clipBehavior: Clip.antiAlias,
                           itemCount: tasks.length,
                           itemBuilder: (context, index) => Padding(
                                 padding: EdgeInsets.only(bottom: 10),
                                 child: TodoItem(
+                                  value: taskCheckedState[tasks[index].title]!,
                                   onChanged: (value) async {
-                                    value = taskCubit.isChecked;
-                                    setState(() {});
+                                    setState(() {
+                                      taskCheckedState[tasks[index].title] =
+                                          value!;
+                                    });
                                     await taskCubit.completeTask(
                                         image: tasks[index].image,
                                         isCompleted: true,
@@ -102,7 +94,8 @@ class _TodoListState extends State<TodoList> {
                                             tasks[index].description);
                                     taskId = snapshot.data!.docs[index].id;
                                   },
-                                  isChecked: taskCubit.isChecked,
+                                  isChecked:
+                                      taskCheckedState[tasks[index].title]!,
                                   taskModel: tasks[index],
                                 ),
                               )),
