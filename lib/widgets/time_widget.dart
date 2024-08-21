@@ -11,7 +11,7 @@ class TimeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 30,
-      width: 100,
+      width: 138,
       decoration:
           BoxDecoration(color: kColor, borderRadius: BorderRadius.circular(32)),
       child: Center(
@@ -20,11 +20,11 @@ class TimeWidget extends StatelessWidget {
           children: [
             Text(
               date,
-              style: const TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(color: Colors.white, fontSize: 13),
             ),
             const Image(
-                height: 17,
-                width: 17,
+                height: 15,
+                width: 15,
                 image: AssetImage('assets/images/icon_time.png')),
           ],
         ),

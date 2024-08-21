@@ -42,7 +42,7 @@ class _TodoItemState extends State<TodoItem> {
                 Row(
                   children: [
                     Checkbox(value: widget.value, onChanged: widget.onChanged),
-                    const SizedBox(width: 70),
+                    const SizedBox(width: 50),
                     SizedBox(
                       width: 80,
                       child: Column(
@@ -59,11 +59,11 @@ class _TodoItemState extends State<TodoItem> {
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TimeWidget(
-                      date: formatDate(
-                          widget.taskModel.dateTime.toDate(), [HH, ':', nn]),
-                      //dd, '/', mm, '_',
+                      date: formatDate(widget.taskModel.dateTime.toDate(),
+                          [dd, '/', mm, '/', yy, ' - ', HH, ':', nn]),
                     ),
                     const SizedBox(
                       width: 10,

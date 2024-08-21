@@ -12,7 +12,7 @@ class AddTaskCustomButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 45,
-        width: 100,
+        width: 120,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8),
@@ -20,7 +20,7 @@ class AddTaskCustomButton extends StatelessWidget {
         child: Center(
             child: Text(
           title,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white, fontSize: 18),
         )),
       ),
     );

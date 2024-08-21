@@ -17,6 +17,7 @@ class TasksCubit extends Cubit<TasksState> {
     required String taskDescription,
     required bool isCompleted,
     required String image,
+    required DateTime time,
   }) async {
     if (user != null) {
       String uid = user!.uid;
@@ -30,7 +31,7 @@ class TasksCubit extends Cubit<TasksState> {
         await tasks.add({
           'title': taskTitle,
           'description': taskDescription,
-          'time': DateTime.now(),
+          'time': time,
           'isCompleted': isCompleted,
           'image': image,
         });
@@ -51,7 +52,7 @@ class TasksCubit extends Cubit<TasksState> {
           .collection('users')
           .doc(uid)
           .collection('tasks')
-          .orderBy('time', descending: true)
+          .orderBy('time', descending: false)
           .snapshots();
     } else {
       emit(NoUserSigned());

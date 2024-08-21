@@ -50,7 +50,7 @@ class _DoneListState extends State<DoneList> {
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
                         return const SizedBox(
-                            height: 600,
+                            height: 500,
                             child: Center(child: CircularProgressIndicator()));
                       }
                       final List<TaskModel> completeTasks = [];
@@ -90,6 +90,7 @@ class _DoneListState extends State<DoneList> {
                                                 .title] = value!;
                                           });
                                           await taskCubit.addTask(
+                                              time: DateTime.now(),
                                               image: completeTasks[index].image,
                                               isCompleted: false,
                                               taskTitle:

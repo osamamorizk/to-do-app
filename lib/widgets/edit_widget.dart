@@ -9,7 +9,7 @@ class EditWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 30,
-      width: 90,
+      width: 60,
       decoration: BoxDecoration(
           color: Colors.grey.withOpacity(.2),
           borderRadius: BorderRadius.circular(32)),
@@ -19,11 +19,11 @@ class EditWidget extends StatelessWidget {
           children: [
             Text(
               'edit',
-              style: TextStyle(color: Colors.black, fontSize: 15),
+              style: TextStyle(color: Colors.black, fontSize: 13),
             ),
             Image(
-                height: 17,
-                width: 17,
+                height: 15,
+                width: 15,
                 image: AssetImage('assets/images/icon_edit.png')),
           ],
         ),
