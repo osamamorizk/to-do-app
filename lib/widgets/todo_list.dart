@@ -42,17 +42,16 @@ class _TodoListState extends State<TodoList> {
                 textColor: Colors.white,
                 fontSize: 16.0);
           }
-          if (state is TasksDeleteSuccess) {
-            taskCubit.delete(taskId!, 'tasks');
-            Fluttertoast.showToast(
-                msg: "Task deleted",
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
-                fontSize: 16.0);
-          }
+          // if (state is TasksDeleteSuccess) {
+          //   Fluttertoast.showToast(
+          //       msg: "Task deleted",
+          //       toastLength: Toast.LENGTH_SHORT,
+          //       gravity: ToastGravity.BOTTOM,
+          //       timeInSecForIosWeb: 1,
+          //       backgroundColor: Colors.black,
+          //       textColor: Colors.white,
+          //       fontSize: 16.0);
+          // }
         },
         builder: (context, state) {
           return SingleChildScrollView(

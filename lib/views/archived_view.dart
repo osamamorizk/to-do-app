@@ -25,23 +25,6 @@ class ArchivedView extends StatelessWidget {
           ),
         ),
         backgroundColor: kColorBackground,
-        // floatingActionButton: FloatingActionButton(
-        //   shape: RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.circular(32),
-        //   ),
-        //   onPressed: () {
-        //     showModalBottomSheet(
-        //         backgroundColor: kColorBackground,
-        //         isScrollControlled: true,
-        //         context: context,
-        //         builder: (context) => AddTaskView());
-        //   },
-        //   backgroundColor: kColor,
-        //   child: const Icon(
-        //     Icons.add,
-        //     color: Colors.white,
-        //   ),
-        // ),
         body: DoneList());
   }
 }

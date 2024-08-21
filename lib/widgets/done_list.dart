@@ -36,16 +36,16 @@ class _DoneListState extends State<DoneList> {
               textColor: Colors.white,
               fontSize: 16.0);
         }
-        if (state is TasksDeleteSuccess) {
-          Fluttertoast.showToast(
-              msg: "Task deleted",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.black,
-              textColor: Colors.white,
-              fontSize: 16.0);
-        }
+        // if (state is TasksDeleteSuccess) {
+        //   Fluttertoast.showToast(
+        //       msg: "Task deleted",
+        //       toastLength: Toast.LENGTH_SHORT,
+        //       gravity: ToastGravity.BOTTOM,
+        //       timeInSecForIosWeb: 1,
+        //       backgroundColor: Colors.black,
+        //       textColor: Colors.white,
+        //       fontSize: 16.0);
+        // }
       },
       builder: (context, state) {
         return Padding(

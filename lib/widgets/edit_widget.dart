@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo/views/edit_task_view.dart';
 
 class EditWidget extends StatelessWidget {
   const EditWidget({

@@ -111,7 +111,7 @@ class TasksCubit extends Cubit<TasksState> {
   }
 
   delete(String taskId, String collection) {
-    // emit(TasksDeleteLoading());
+    emit(TasksDeleteLoading());
     User? user = FirebaseAuth.instance.currentUser;
     String uid = user!.uid;
 
@@ -122,7 +122,8 @@ class TasksCubit extends Cubit<TasksState> {
           .collection(collection)
           .doc(taskId);
 
-      return task.delete().then((value) => emit(TasksDeleteSuccess()));
+      task.delete();
+      emit(TasksDeleteSuccess());
     } catch (e) {
       emit(TasksDeleteFailure(errorMessage: e.toString()));
     }
