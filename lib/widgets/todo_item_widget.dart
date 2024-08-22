@@ -10,12 +10,12 @@ class TodoItem extends StatefulWidget {
       {super.key,
       required this.taskModel,
       this.onChanged,
-      required this.isChecked,
+      // required this.isChecked,
       required this.value,
       this.onTap});
   final TaskModel taskModel;
   final void Function(bool?)? onChanged;
-  final bool isChecked;
+
   final bool value;
   final void Function()? onTap;
 

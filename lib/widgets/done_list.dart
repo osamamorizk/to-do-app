@@ -140,8 +140,8 @@ class _DoneListState extends State<DoneList> {
                                                 snapshot.data!.docs[index].id;
                                           },
                                           taskModel: completeTasks[index],
-                                          isChecked: isCompletedtask[
-                                              completeTasks[index].title]!,
+                                          // isChecked: isCompletedtask[
+                                          //     completeTasks[index].title]!,
                                         ),
                                       ),
                                     )),

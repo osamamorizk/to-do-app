@@ -147,8 +147,8 @@ class _TodoListState extends State<TodoList> {
                                           taskId =
                                               snapshot.data!.docs[index].id;
                                         },
-                                        isChecked: taskCheckedState[
-                                            tasks[index].title]!,
+                                        // isChecked: taskCheckedState[
+                                        //     tasks[index].title]!,
                                         taskModel: tasks[index],
                                       ),
                                     ),
