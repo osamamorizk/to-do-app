@@ -8,8 +8,6 @@ import 'package:todo/models/task_model.dart';
 import 'package:todo/views/edit_task_view.dart';
 import 'package:todo/widgets/todo_item_widget.dart';
 
-// int? tasksNum;
-
 class TodoList extends StatefulWidget {
   const TodoList({
     super.key,

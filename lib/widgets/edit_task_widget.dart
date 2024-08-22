@@ -6,11 +6,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo/consts.dart';
 import 'package:todo/cubits/tasks_cubit/tasks_cubit.dart';
 import 'package:todo/models/task_model.dart';
-import 'package:todo/views/home_view.dart';
 import 'package:todo/widgets/ImageList_widget.dart';
 import 'package:todo/widgets/add_task_custom_button.dart';
 import 'package:todo/widgets/addtask_custom_text_field.dart';
 import 'package:todo/widgets/custom_bottom_nav_barr.dart';
+import 'package:todo/widgets/edit_image.dart';
 
 class EditTaskWidget extends StatefulWidget {
   const EditTaskWidget(
@@ -103,7 +103,7 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                       maximumDate: DateTime(2026),
                       backgroundColor: kColorBackground,
                       mode: CupertinoDatePickerMode.dateAndTime,
-                      initialDateTime: DateTime.now(),
+                      initialDateTime: widget.taskModel.dateTime.toDate(),
                       onDateTimeChanged: (DateTime newDateTime) {
                         setState(() {
                           selectedDate = newDateTime;
@@ -114,7 +114,7 @@ class _EditTaskWidgetState extends State<EditTaskWidget> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const ImageList(),
+                  EditImageList(taskModel: widget.taskModel),
                   const SizedBox(
                     height: 32,
                   ),

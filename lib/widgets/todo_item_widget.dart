@@ -67,7 +67,7 @@ class _TodoItemState extends State<TodoItem> {
                   children: [
                     TimeWidget(
                       date: formatDate(widget.taskModel.dateTime.toDate(),
-                          [dd, '/', mm, '/', yy, ' - ', HH, ':', nn]),
+                          [d, '/', M, ' - ', h, ':', nn, ' ', am]),
                     ),
                     const SizedBox(
                       width: 10,

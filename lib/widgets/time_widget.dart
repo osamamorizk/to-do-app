@@ -23,8 +23,8 @@ class TimeWidget extends StatelessWidget {
               style: const TextStyle(color: Colors.white, fontSize: 13),
             ),
             const Image(
-                height: 15,
-                width: 15,
+                height: 12,
+                width: 12,
                 image: AssetImage('assets/images/icon_time.png')),
           ],
         ),

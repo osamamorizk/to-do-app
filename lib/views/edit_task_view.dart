@@ -23,7 +23,7 @@ class EditTaskView extends StatelessWidget {
             color: kColor,
           ),
           title: const Text(
-            "Edit",
+            "Edit Task",
             style: TextStyle(
               color: kColorHints,
               fontWeight: FontWeight.bold,

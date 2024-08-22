@@ -37,7 +37,9 @@ class ToDoApp extends StatelessWidget {
           LoginView.id: (context) => const LoginView(),
           HomeView.id: (context) => const HomeView(),
           ProfileView.id: (context) => const ProfileView(),
-          EditTaskView.id: (context) => const EditTaskView()
+          EditTaskView.id: (context) => const EditTaskView(),
+          CustomBottomNavigationBar.id: (context) =>
+              CustomBottomNavigationBar(),
         },
         home: AuthChecker(),
       ),

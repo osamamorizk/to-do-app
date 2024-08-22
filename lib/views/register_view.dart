@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todo/cubits/auth_cubit/auth_cubit.dart';
 import 'package:todo/consts.dart';
 import 'package:todo/views/login_view.dart';
+import 'package:todo/widgets/custom_bottom_nav_barr.dart';
 import 'package:todo/widgets/custom_button.dart';
 import 'package:todo/widgets/custom_text_field.dart';
 import 'package:todo/widgets/qusetion_inauth.dart';
@@ -160,7 +161,7 @@ class _RegisterViewState extends State<RegisterView> {
                               backgroundColor: Colors.green,
                               textColor: Colors.white,
                               fontSize: 16.0);
-                          Navigator.pop(context, LoginView.id);
+                          Navigator.pop(context, CustomBottomNavigationBar.id);
                         }
                       },
                       builder: (context, state) {
