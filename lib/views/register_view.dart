@@ -161,8 +161,12 @@ class _RegisterViewState extends State<RegisterView> {
                               backgroundColor: Colors.green,
                               textColor: Colors.white,
                               fontSize: 16.0);
-                          Navigator.pushNamed(
-                              context, CustomBottomNavigationBar.id);
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    CustomBottomNavigationBar()),
+                            (Route<dynamic> route) => false,
+                          );
                         }
                       },
                       builder: (context, state) {
