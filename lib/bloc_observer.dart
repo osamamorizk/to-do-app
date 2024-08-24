@@ -6,7 +6,7 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
-    // TODO: implement onEvent
+    log('event= $event');
   }
 
   @override
@@ -24,6 +24,6 @@ class MyBlocObserver extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
-    // TODO: implement onChange
+    log('transition= $transition');
   }
 }

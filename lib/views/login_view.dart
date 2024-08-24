@@ -2,7 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:todo/cubits/auth_cubit/auth_cubit.dart';
+import 'package:todo/blocs/login_bloc/login_bloc.dart';
 import 'package:todo/consts.dart';
 import 'package:todo/views/register_view.dart';
 import 'package:todo/widgets/custom_bottom_nav_barr.dart';
@@ -29,7 +29,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => LoginBloc(),
       child: Scaffold(
         backgroundColor: Color(0xffF6F6F6),
         body: Padding(
@@ -113,16 +113,16 @@ class _LoginViewState extends State<LoginView> {
                 const SizedBox(
                   height: 32,
                 ),
-                BlocConsumer<AuthCubit, AuthState>(
+                BlocConsumer<LoginBloc, LoginState>(
                   listener: (context, state) {
-                    if (state is AuthLoginSuccess) {
+                    if (state is LoginSuccess) {
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                             builder: (context) => CustomBottomNavigationBar()),
                         (Route<dynamic> route) => false,
                       );
                     }
-                    if (state is AuthFailure) {
+                    if (state is LoginFailure) {
                       Fluttertoast.showToast(
                           msg: state.errorMessage,
                           toastLength: Toast.LENGTH_SHORT,
@@ -132,7 +132,7 @@ class _LoginViewState extends State<LoginView> {
                           textColor: Colors.white,
                           fontSize: 16.0);
                     }
-                    if (state is AuthLoginSuccess) {
+                    if (state is LoginSuccess) {
                       Fluttertoast.showToast(
                           msg: state.successMessage,
                           toastLength: Toast.LENGTH_SHORT,
@@ -145,13 +145,13 @@ class _LoginViewState extends State<LoginView> {
                   },
                   builder: (context, state) {
                     return ConditionalBuilder(
-                      condition: state is! AuthLoading,
+                      condition: state is! LoginLoading,
                       builder: (context) => CustomButton(
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
-                            await BlocProvider.of<AuthCubit>(context).userLogin(
+                            BlocProvider.of<LoginBloc>(context).add(LoginEvent(
                                 email: emailController.text,
-                                password: passController.text);
+                                password: passController.text));
                           }
                         },
                         text: 'Sign in',
